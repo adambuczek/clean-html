@@ -1,7 +1,7 @@
 var htmlparser = require('htmlparser2'),
     unsupportedTags = [
-        'script',
-        'style'
+        // 'script',
+        // 'style'
     ],
     voidElements = [
         'area',
