@@ -1,7 +1,7 @@
 var htmlparser = require('htmlparser2'),
     unsupportedTags = [
-        // 'script',
-        // 'style'
+        'script',
+        'style'
     ],
     voidElements = [
         'area',
@@ -224,7 +224,10 @@ function renderComment(node) {
 }
 
 function renderTag(node) {
-    if (unsupportedTags.indexOf(node.name) != -1) {
+    if (
+        unsupportedTags.indexOf(node.name) != -1 &&
+        !node.attribs.hasOwnProperty('keep')
+    ) {
         return '';
     }
 
@@ -239,7 +242,7 @@ function renderTag(node) {
     var openTag = '<' + node.name;
 
     for (var attrib in node.attribs) {
-        if (!isListedInOptions('remove-attributes', attrib)) {
+        if (!isListedInOptions('remove-attributes', attrib) && attrib !== 'keep') {
             openTag += ' ' + attrib + '="' + removeExtraSpace(node.attribs[attrib]) + '"';
         }
     }

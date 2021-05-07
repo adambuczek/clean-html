@@ -98,13 +98,13 @@ cleaner.clean('<app-test>foo</app-test>', {'remove-tags': [/app-.+/]}, function 
     assert.equal(html, 'foo');
 });
 
-// // test that unsupported tags are removed
-// cleaner.clean('<script>foo</script>\n<style>bar</style>', function (html) {
-//     assert.equal(html, '');
-// });
-
-// test that script and style are retained
+// test that unsupported tags are removed
 cleaner.clean('<script>foo</script>\n<style>bar</style>', function (html) {
+    assert.equal(html, '');
+});
+
+// test that unsupported tags with keep attr are retained
+cleaner.clean('<script keep>foo</script>\n<style keep>bar</style>', function (html) {
     assert.equal(html, '<script>foo</script><style>bar</style>');
 });
 
@@ -112,6 +112,7 @@ cleaner.clean('<script>foo</script>\n<style>bar</style>', function (html) {
 cleaner.clean('Foo&nbsp;Bar', {'replace-nbsp': false}, function (html) {
     assert.equal(html, 'Foo&nbsp;Bar');
 });
+
 // test that non-breaking space is replaced by a single space when replace-nbsp is true
 cleaner.clean('Foo&nbsp;Bar', {'replace-nbsp': true}, function (html) {
     assert.equal(html, 'Foo Bar');
